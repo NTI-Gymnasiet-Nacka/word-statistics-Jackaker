@@ -12,73 +12,111 @@
 
 
 def read_from_file(path: str):
-    """Reads a file with the given parameter path and returns the file as a list of strings, split on newline (\n).
 
-    Args:
-        path (str): the path of the readable file
-
-    Returns:
-        list(str): list of strings
-    """
     with open(path, "r" ,encoding="utf-8") as f:
-        def count_word():
-            string=""
-            for ord in f.readlines():
-                string+=ord
-                total=string.split()
-            total.remove('-')
-            return print(len(total))
-        
-        def most_frequent():
-            string=""
-            dict={}
-            for ord in f.readlines():
-                string+=ord.lower()
-                total=string.split()
-            total.remove('-')
-            for word in total:
-                if word  in dict:
-                    dict[word]+=1
-                else:
-                    dict[word]=1
-            mest = max(dict, key=dict.get)
-            return print(mest)
+        return f.readlines()
+    
+def count_word(text: list):
+    string=""
 
-        def genomsnittlig_ordlängd():
-            string=""
-            tom_lista=[]
-            for ord in f.readlines():
-                string+=ord.lower()
-                total=string.split()
-            # total.remove('-')
-            print(total)
-            for word in total:
-                tom_lista.append(len(word))
-            genomsnitt=sum(tom_lista)/len(total)
-            return print(genomsnitt)
-        genomsnittlig_ordlängd()
-        
-        def längsta_kortaste():
-            string=""
-            dict={}
-            for ord in f.readlines():
-                string+=ord.lower()
-                total=string.split()
-            total.remove('-')
-            for word in total:
-                if word  in dict:
-                    dict[len(word)]+=1
-                else:
-                    dict[len(word)]=1
-            mest = max(dict, key=dict.get)
-            return print(mest)
-        längsta_kortaste()
+    for ord in text:
+        string+=ord
+    total=string.split()
+    total.remove('-')
+    return print(len(total))
 
+def most_frequent(text: list):
+    string=""
+    dict={}
+
+    for ord in text:
+        string+=ord.lower()
+    total=string.split()
+    total.remove('-')
+
+    for word in total:
+        if word  in dict:
+            dict[word]+=1
+        else:
+            dict[word]=1
+    mest = max(dict, key=dict.get)
+    return print(mest)
+
+def genomsnittlig_ordlängd(text: list):
+    string=""
+    tom_lista=[]
+
+    for ord in text:
+        string+=ord.lower()
+    total=string.split()
+    total.remove('-')
+
+    for word in total:
+        if "." in word:
+            word=word.replace('.','')
+        if "," in word:
+            word=word.replace(',','')
+        tom_lista.append(len(word))
+    genomsnitt=sum(tom_lista)/len(total)
+    return print(genomsnitt)
+
+def längsta_kortaste(text: list):
+    total2=[]
+    string=""
+
+    for ord in text:
+        string+=ord.lower()
+    total=string.split()
+
+    for word in total:
+        if "." in word:
+            word=word.replace('.','')
+        if "," in word:
+            word=word.replace(',','')
+        total2.append(word)
+    total2=sorted(total2, key=len)
+    print(f'Kortaste: {total2[0]}\nLängsta: {total2[-1]}')
+    return
+
+def unika_ord(text: list):
+    string=""
+    string2=""
+    total2=[]
+    dict={}
+
+    for ord in text:
+        string+=ord.lower()
+    total=string.split()
+    total.remove('-')
+
+    for word in total:
+        if "." in word:
+            word=word.replace('.','')
+        if "," in word:
+            word=word.replace(',','')
+        total2.append(word)
+
+    for word in total2:
+        if word  in dict:
+            dict[word]+=1
+        else:
+            dict[word]=1
+    unika=[key for key, value in dict.items() if value == 1]
+
+    for ord in unika:
+        string2+=ord
+        string2+=", "
+    return print(string2)
 
 
 def main():
+    sentences = read_from_file("en_resa_genom_svenska_skogen.txt")
+    count_word(sentences)
+    most_frequent(sentences)
+    genomsnittlig_ordlängd(sentences)
+    längsta_kortaste(sentences)
+    unika_ord(sentences)
     
-    sentences = read_from_file("en_resa_genom_svenska_skogen.txt") # Här har du nu en lista av strängar från den inlästa filen.
 
 if __name__ == "__main__":
     main()
