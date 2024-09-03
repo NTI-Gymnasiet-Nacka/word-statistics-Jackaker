@@ -21,7 +21,60 @@ def read_from_file(path: str):
         list(str): list of strings
     """
     with open(path, "r" ,encoding="utf-8") as f:
-        return f.readlines()
+        def count_word():
+            string=""
+            for ord in f.readlines():
+                string+=ord
+                total=string.split()
+            total.remove('-')
+            return print(len(total))
+        
+        def most_frequent():
+            string=""
+            dict={}
+            for ord in f.readlines():
+                string+=ord.lower()
+                total=string.split()
+            total.remove('-')
+            for word in total:
+                if word  in dict:
+                    dict[word]+=1
+                else:
+                    dict[word]=1
+            mest = max(dict, key=dict.get)
+            return print(mest)
+
+        def genomsnittlig_ordlängd():
+            string=""
+            tom_lista=[]
+            for ord in f.readlines():
+                string+=ord.lower()
+                total=string.split()
+            # total.remove('-')
+            print(total)
+            for word in total:
+                tom_lista.append(len(word))
+            genomsnitt=sum(tom_lista)/len(total)
+            return print(genomsnitt)
+        genomsnittlig_ordlängd()
+        
+        def längsta_kortaste():
+            string=""
+            dict={}
+            for ord in f.readlines():
+                string+=ord.lower()
+                total=string.split()
+            total.remove('-')
+            for word in total:
+                if word  in dict:
+                    dict[len(word)]+=1
+                else:
+                    dict[len(word)]=1
+            mest = max(dict, key=dict.get)
+            return print(mest)
+        längsta_kortaste()
+
+
 
 def main():
     
